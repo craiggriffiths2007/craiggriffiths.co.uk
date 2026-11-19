@@ -14,80 +14,74 @@ main{max-width:1140px;margin:auto;padding:18px 20px 70px}.hero{text-align:center
 h1{margin:10px 0;font-size:clamp(2rem,5vw,3rem)}.hero p{max-width:700px;margin:10px auto;color:#c0cde0}
 .eyebrow{font-size:.75rem;font-weight:800}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .card{border:1px solid #333747;border-radius:18px;overflow:hidden;background:#101925}
-.art{height:195px;display:grid;place-items:center;font-size:5rem;background:radial-gradient(circle,#9e451c,#251321 70%)}
-.card:nth-child(2) .art{background:radial-gradient(circle,#e755b4,#391969)}
-.card:nth-child(3) .art{background:radial-gradient(circle,#5682e2,#151f4e)}
-.card:nth-child(4) .art{background:radial-gradient(circle,#0da5d3,#092840)}
-.card:nth-child(5) .art{background:radial-gradient(circle,#ec8022,#2c1120)}
+.art{height:195px;position:relative;background:#101925;overflow:hidden}
+.art img{width:100%;height:100%;display:block;object-fit:cover}
+.art::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 65%,#050b1470)}
+.game-badge{position:absolute;top:12px;left:12px;z-index:1;border:1px solid #ffda7966;border-radius:6px;background:#080c15d9;color:#ffda79;padding:5px 8px;font-size:.68rem;font-weight:800;letter-spacing:.08em}
 .cardbody{padding:16px;display:flex;justify-content:space-between;align-items:end;gap:9px}h3{margin:0;font-size:1.1rem}.card p{font-size:.8rem;color:#9bb4ca;margin:5px 0}
 button{cursor:pointer;font:inherit}.play{border:0;background:linear-gradient(#b4fa85,#4fb936);padding:9px 15px;border-radius:30px;font-size:.8rem;font-weight:900;color:#12210c}
-.small{font-size:.82rem;color:#aebcd0}.modal{display:none;position:fixed;inset:0;background:#000d;z-index:10;align-items:center;justify-content:center;padding:15px}
-.modal.open{display:flex}.machine{max-width:540px;width:100%;border:2px solid #b68f49;border-radius:18px;padding:20px;background:#101d30;max-height:95vh;overflow-y:auto}
 .head{display:flex;align-items:center;justify-content:space-between}.close{color:white;border:1px solid #75839c;border-radius:8px;background:transparent;padding:5px 10px}
-.reels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0;background:#0b1220;padding:10px;border-radius:10px}
-.cell{min-height:80px;background:linear-gradient(#f0f6fc,#b6cddd);display:grid;place-items:center;border-radius:7px;font-size:2.6rem}
-.cell.winner{outline:4px solid #f9cb4c}.status{display:flex;justify-content:space-between;gap:12px;font-weight:700;color:#ffdc81}
-.controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
-select,.secondary{background:#182b46;color:white;border:1px solid #71829e;padding:9px;border-radius:9px}
-.unity-dialog{width:min(1280px,calc(100% - 24px),calc((100dvh - 90px) * var(--game-ratio) + 26px));max-width:none;max-height:calc(100% - 24px);padding:12px;border:1px solid #b68f49;border-radius:12px;background:#101925;color:inherit}
-.unity-dialog::backdrop{background:#000d}.unity-dialog .head{gap:12px;margin-bottom:8px}.unity-dialog h2{margin:0}
-.unity-frame{display:block;width:100%;aspect-ratio:var(--game-ratio);border:0;background:#080c15}
-#message{text-align:center;min-height:22px;color:#ffde7b}
+.game-dialog{width:min(1280px,calc(100% - 24px),calc((100dvh - 90px) * var(--game-ratio) + 26px));max-width:none;max-height:calc(100% - 24px);padding:12px;border:1px solid #b68f49;border-radius:12px;background:#101925;color:inherit}
+.game-dialog::backdrop{background:#000d}.game-dialog .head{gap:12px;margin-bottom:8px}.game-dialog h2{margin:0}
+.game-frame{display:block;width:100%;aspect-ratio:var(--game-ratio);border:0;background:#080c15}
 @media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.grid{grid-template-columns:1fr}.cell{min-height:60px;font-size:2rem}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header><a href="casino-demo.html"><strong>♠ CRAIG'S CASINO</strong></a><a class="back" href="index.html#projects">← Portfolio</a></header>
 <main><section class="hero"><div class="suits">♠ ♦ ♣ ♥</div><p class="eyebrow">WELCOME TO</p><img src="Images/craigscasino.png" alt="Craig's Casino"><h1>Demo Game Lobby</h1><p>Play casino-themed mini-games using fictional credits. No account, backend, real-money betting, payments or prizes.</p></section>
-<section><p class="eyebrow">GAME LOBBY</p><h2>Choose a demo</h2><div class="grid" id="games"></div>
-<p class="small">Firebird, Candy Cascade, and Tempest Temple run in Unity with virtual credits. The other games are simplified browser demos.</p></section></main>
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><div class="machine">
-<div class="head"><h2 id="gameTitle">Demo game</h2><button id="close" class="close" aria-label="Close game">✕</button></div>
-<div class="status"><span>Virtual credits: <span id="credits">1000</span></span><span>Last win: <span id="win">0</span></span></div>
-<div class="reels" id="reels"></div>
-<div class="controls"><label for="bet">Demo bet</label><select id="bet"><option>10</option><option>25</option><option>50</option><option>100</option></select><button class="play" id="spin">SPIN</button><button class="secondary" id="reset">Reset credits</button></div>
-<p id="message" role="status">Choose your bet and spin.</p><p class="small">Virtual entertainment credits only. No deposits or withdrawals.</p>
-</div></div>
-<dialog class="unity-dialog" id="unityDialog" aria-labelledby="unityTitle">
-<div class="head"><h2 id="unityTitle"></h2><form method="dialog"><button class="close" autofocus>Close game</button></form></div>
+<section><p class="eyebrow">GAME LOBBY</p><h2>Choose a demo</h2><div class="grid" id="games">
+<article class="card">
+  <div class="art"><img src="Images/casino-cards/firebird.png" alt="" loading="lazy"><span class="game-badge">CASCADE SLOTS</span></div>
+  <div class="cardbody"><div><h3>Firebird</h3><p>Falling reels and fiery wins</p></div><a class="play" href="games/firebird/index.html" data-name="Firebird" data-ratio="1280/700">DEMO</a></div>
+</article>
+<article class="card">
+  <div class="art"><img src="Images/casino-cards/candy-cascade.png" alt="" loading="lazy"><span class="game-badge">CASCADE SLOTS</span></div>
+  <div class="cardbody"><div><h3>Candy Cascade</h3><p>Sweets · cascades · multipliers</p></div><a class="play" href="games/candy-cascade/index.html" data-name="Candy Cascade" data-ratio="1240/800">DEMO</a></div>
+</article>
+<article class="card">
+  <div class="art"><img src="Images/casino-cards/tempest-temple.png" alt="" loading="lazy"><span class="game-badge">TUMBLING SLOTS</span></div>
+  <div class="cardbody"><div><h3>Tempest Temple</h3><p>Gems · lightning multipliers · free spins</p></div><a class="play" href="games/tempest-temple/index.html" data-name="Tempest Temple" data-ratio="1380/940">DEMO</a></div>
+</article>
+<article class="card">
+  <div class="art"><img src="Images/casino-cards/reel-game.png" alt="" loading="lazy"><span class="game-badge">10 PAYLINES</span></div>
+  <div class="cardbody"><div><h3>Reel Catch</h3><p>Cash fish · free spins · collector</p></div><a class="play" href="games/reel-catch/index.html" data-name="Reel Catch" data-ratio="1.45">DEMO</a></div>
+</article>
+<article class="card">
+  <div class="art"><img src="Images/casino-cards/phoenix-game.png" alt="" loading="lazy"><span class="game-badge">CASCADE SLOTS</span></div>
+  <div class="cardbody"><div><h3>Phoenix Slots</h3><p>5 × 3 cascading wins</p></div><a class="play" href="games/phoenix-slots/index.html" data-name="Phoenix Slots" data-ratio="1.55">DEMO</a></div>
+</article>
+</div>
+</section></main>
+<dialog class="game-dialog" id="demoDialog" aria-labelledby="demoTitle">
+<div class="head"><h2 id="demoTitle"></h2><form method="dialog"><button class="close" autofocus>Close game</button></form></div>
 </dialog>
 <script>
 'use strict';
-const games=[
-{title:'Firebird',icon:'🔥',description:'Cascading reels and free spins',url:'games/firebird/index.html'},
-{title:'Candy Cascade',icon:'🍬',description:'Cluster wins, tumbling sweets and free spins',url:'games/candy-cascade/index.html',ratio:1240/800},
-{title:'Tempest Temple',icon:'🏰',description:'Underwater tumbles, storm multipliers and free spins',url:'games/tempest-temple/index.html',ratio:1380/940},
-{title:'Reel Catch',icon:'🐠',description:'Fishing-themed slot demo',symbols:['🐠','🐟','🎣','⚓','🪙']},
-{title:'Phoenix Slots',icon:'🦅',description:'Classic fiery reels',symbols:['🦅','🔥','💎','🔔','7️⃣']}
-];
-const el=id=>document.getElementById(id);
-let active=null,credits=1000;
-function randomSymbol(symbols){const bytes=new Uint32Array(1);crypto.getRandomValues(bytes);return symbols[bytes[0]%symbols.length]}
-function board(symbols,won=false){el('reels').replaceChildren(...symbols.map((s,i)=>{const d=document.createElement('div');d.className='cell'+(won&&i>=3&&i<=5?' winner':'');d.textContent=s;return d}))}
-function show(){el('credits').textContent=credits.toLocaleString('en-GB')}
-function openGame(game){active=game;credits=1000;el('win').textContent='0';el('gameTitle').textContent=game.title;el('message').textContent='Choose your bet and spin.';board(Array.from({length:9},()=>randomSymbol(game.symbols)));show();el('modal').classList.add('open');el('close').focus()}
-const unityDialog=el('unityDialog');
-function openUnityGame(game){
-  el('unityTitle').textContent=game.title;
-  unityDialog.style.setProperty('--game-ratio',game.ratio??1280/700);
-  const frame=document.createElement('iframe');
-  frame.className='unity-frame';
-  frame.title=game.title+' Unity demo';
-  frame.src=game.url;
-  frame.allowFullscreen=true;
-  unityDialog.append(frame);
-  unityDialog.showModal();
+const gameDialog = document.getElementById('demoDialog');
+const gameTitle = document.getElementById('demoTitle');
+
+for (const link of document.querySelectorAll('#games .play')) {
+    link.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+
+        const { name, ratio } = link.dataset;
+        const [width, height = 1] = ratio.split('/').map(Number);
+        gameTitle.textContent = name;
+        gameDialog.style.setProperty('--game-ratio', width / height);
+
+        const frame = document.createElement('iframe');
+        frame.className = 'game-frame';
+        frame.title = name + ' demo';
+        frame.src = link.href;
+        frame.allowFullscreen = true;
+        gameDialog.append(frame);
+        gameDialog.showModal();
+    });
 }
-unityDialog.addEventListener('close',()=>unityDialog.querySelector('iframe')?.remove());
-function closeGame(){el('modal').classList.remove('open');active=null}
-games.forEach(g=>{const card=document.createElement('article');card.className='card';const art=document.createElement('div');art.className='art';art.textContent=g.icon;
-const body=document.createElement('div');body.className='cardbody';const info=document.createElement('div');const title=document.createElement('h3');title.textContent=g.title;const desc=document.createElement('p');desc.textContent=g.description;info.append(title,desc);
-const button=document.createElement('button');button.className='play';button.textContent='DEMO';button.addEventListener('click',()=>g.url?openUnityGame(g):openGame(g));body.append(info,button);card.append(art,body);el('games').append(card)});
-el('close').addEventListener('click',closeGame);el('modal').addEventListener('click',e=>{if(e.target===el('modal'))closeGame()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)closeGame()});
-el('reset').addEventListener('click',()=>{credits=1000;show();el('win').textContent='0';el('message').textContent='Virtual credits reset.'});
-el('spin').addEventListener('click',()=>{if(!active)return;const bet=Number(el('bet').value);if(credits<bet){el('message').textContent='Not enough credits. Reset to continue.';return}
-credits-=bet;const symbols=Array.from({length:9},()=>randomSymbol(active.symbols));const won=symbols[3]===symbols[4]&&symbols[4]===symbols[5];const payout=won?bet*10:0;credits+=payout;show();el('win').textContent=payout;board(symbols,won);el('message').textContent=won?'Three matched! You won '+payout+' virtual credits.':'No win this time. Spin again!'});
+gameDialog.addEventListener('close', () => gameDialog.querySelector('iframe')?.remove());
 </script>
 </body>
 </html>

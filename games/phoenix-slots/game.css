@@ -1,0 +1,424 @@
+* { box-sizing:border-box; }
+html { color-scheme:dark; }
+body { margin:0; background:#071522; color:white; font:16px/1.45 system-ui,sans-serif; }
+.demo-bar { display:flex; justify-content:space-between; gap:12px; padding:10px 18px; background:#071522; }
+.demo-bar a { color:#ffda79; }
+button, select { font:inherit; }
+button:enabled { cursor:pointer; }
+.text-center { text-align:center; }
+.d-flex { display:flex; } .align-items-end { align-items:flex-end; }
+.justify-content-center { justify-content:center; } .gap-2 { gap:.5rem; }
+.d-block { display:block; }
+.form-select { padding:8px; border-radius:6px; }
+.btn { padding:8px 24px; background:#532c16; color:#fff; border-radius:8px; }
+h1 { margin:12px 0; }
+/* Per-game audio control -------------------------------------------------- */
+.game-audio-button {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 250;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(242,207,99,.55);
+    border-radius: 50%;
+    background: rgba(5,10,17,.82);
+    color: #fff;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,.38), 0 0 16px rgba(242,207,99,.08);
+    backdrop-filter: blur(8px);
+}
+
+    .game-audio-button:hover {
+        border-color: var(--casino-gold);
+        transform: translateY(-1px);
+    }
+
+/* ========================================================================== */
+/* Phoenix Slots - responsive page shell                                      */
+/* ========================================================================== */
+.phoenix-game-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+.phoenix-controls {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 600px) {
+    .phoenix-game-page {
+        margin-top: 1.25rem !important;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .phoenix-controls {
+        justify-content: center !important;
+        flex-wrap: nowrap;
+        gap: 8px !important;
+    }
+
+        .phoenix-controls #bet {
+            width: 105px !important;
+        }
+
+        .phoenix-controls #spinButton {
+            min-width: 145px;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+        }
+}
+
+.slot-cell {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.4s ease, opacity 0.25s ease, background-color 0.25s ease;
+}
+
+    .slot-cell.winning {
+        animation: symbolFlash 0.25s ease-in-out infinite alternate;
+    }
+
+    .slot-cell.removed {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+.reel-window {
+    position: relative;
+    width: 650px;
+    height: 380px;
+    margin: 30px auto 24px auto;
+    overflow: hidden;
+}
+
+#paylineOverlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 40;
+}
+
+#reels {
+    display: grid;
+    grid-template-columns: repeat(5, 120px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 10px;
+    justify-content: center;
+}
+
+
+.slot-symbol {
+    width: 108px;
+    height: 108px;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+.survivor-mover {
+    display: block;
+    user-select: none;
+    will-change: transform;
+}
+
+@keyframes symbolFlash {
+    from {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 0 transparent);
+    }
+
+    to {
+        transform: scale(1.15);
+        filter: brightness(1.5) drop-shadow(0 0 10px #ffd700) drop-shadow(0 0 18px #ffffff);
+    }
+}
+
+#phoenixOverlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.phoenix-symbol {
+    position: absolute;
+    width: 140px;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transform: translateX(var(--phoenix-x-offset, -20px)) translateY(170px) scale(0.35);
+    transform-origin: bottom center;
+    filter: brightness(1.5) drop-shadow(0 0 15px orange) drop-shadow(0 0 30px red);
+    z-index: 30;
+}
+
+    .phoenix-symbol.appear {
+        animation: phoenixRise 0.9s ease-out forwards;
+    }
+
+@keyframes phoenixRise {
+    0% {
+        opacity: 0;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(170px) scale(0.35);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(-5px) scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(0) scale(1);
+    }
+}
+
+
+
+.fireball {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    transform: translate(-50%, -50%) scale(0.2);
+    border-radius: 50%;
+    background: radial-gradient( circle, white 0%, #fff200 15%, #ff9d00 35%, #ff3300 60%, rgba(255, 0, 0, 0) 75% );
+    box-shadow: 0 0 12px #ffff00, 0 0 25px #ff9900, 0 0 40px #ff3300;
+    pointer-events: none;
+    animation: fireballExplosion 0.5s ease-out forwards;
+}
+
+@keyframes fireballExplosion {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.2);
+    }
+
+    45% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(2.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(3);
+    }
+}
+
+.symbol-explode {
+    animation: symbolExplode 0.35s ease-in forwards;
+}
+
+@keyframes symbolExplode {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1.25);
+        filter: brightness(3);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.2);
+        filter: brightness(5);
+    }
+}
+
+.phoenix-explosion {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    transform: translate(-50%, -50%) scale(0.2);
+    border-radius: 50%;
+    background: radial-gradient( circle, white 0%, #fff200 12%, #ff9d00 30%, #ff3300 55%, rgba(255, 0, 0, 0) 75% );
+    box-shadow: 0 0 20px #ffff00, 0 0 40px #ff9900, 0 0 70px #ff3300;
+    pointer-events: none;
+    z-index: 60;
+    animation: phoenixExplosion 0.5s ease-out forwards;
+}
+
+.phoenix-explode {
+    animation: phoenixExplode 0.5s ease-in forwards !important;
+}
+
+@keyframes phoenixExplosion {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.2);
+    }
+
+    45% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.8);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+}
+
+@keyframes phoenixExplode {
+    0% {
+        opacity: 1;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(0) scale(1);
+        filter: brightness(1.5) drop-shadow(0 0 15px orange) drop-shadow(0 0 30px red);
+    }
+
+    35% {
+        opacity: 1;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(0) scale(1.18);
+        filter: brightness(4) drop-shadow(0 0 30px yellow) drop-shadow(0 0 55px orange);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(var(--phoenix-x-offset, -20px)) translateY(0) scale(0.1);
+        filter: brightness(6) blur(3px);
+    }
+}
+
+
+
+
+
+
+html,
+body {
+    min-height: 100%;
+}
+
+    body.casino-body {
+        background: linear-gradient( rgba(4, 8, 18, 0.20), rgba(4, 8, 18, 0.45) ), url('assets/phoenix-bg.png') center center / cover fixed no-repeat;
+        color: #fff;
+    }
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    color: #ffd45a;
+    text-shadow: 0 2px 3px #000, 0 0 12px rgba(255, 150, 20, 0.55);
+}
+
+#balance,
+#winMessage {
+    color: #fff;
+    text-shadow: 0 2px 4px #000, 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+#bet {
+    background-color: rgba(15, 20, 30, 0.88);
+    color: #fff;
+    border: 1px solid #c99a35;
+}
+
+#spinButton {
+    border: 1px solid #ffbe32;
+    box-shadow: 0 0 12px rgba(255, 145, 0, 0.55), inset 0 0 8px rgba(255, 220, 100, 0.25);
+}
+
+.reel-window {
+    position: relative;
+    width: 650px;
+    height: 380px;
+    margin: 30px auto 24px auto;
+    overflow: visible;
+}
+
+.reel-clip {
+    position: absolute;
+    inset: -40px;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+
+#explosionOverlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    overflow: visible;
+}
+
+
+/* Phoenix phone layout: keep all five reels inside the viewport at
+                   normal browser zoom while preserving the desktop layout unchanged. */
+@media (max-width: 600px) {
+    .reel-window {
+        width: 100%;
+        max-width: 650px;
+        height: auto;
+        aspect-ratio: 650 / 380;
+        margin: 18px auto 18px;
+    }
+
+    .reel-clip {
+        left: -8px;
+        right: -8px;
+        top: -28px;
+        bottom: -28px;
+        width: auto;
+        height: auto;
+        padding: 28px 8px;
+        box-sizing: border-box;
+    }
+
+    #reels {
+        width: 100%;
+        height: 100%;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: clamp(2px, 1.25vw, 5px);
+        justify-content: stretch;
+    }
+
+    .slot-cell {
+        width: auto;
+        height: auto;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .slot-symbol {
+        width: 90%;
+        height: 90%;
+        max-width: 108px;
+        max-height: 108px;
+    }
+
+    .phoenix-symbol {
+        height: 100%;
+    }
+
+    #winMessage {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

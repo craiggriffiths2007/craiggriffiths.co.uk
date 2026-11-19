@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reel Catch | Craig's Casino Demo</title>
+<link rel="stylesheet" href="game.css">
+</head>
+<body class="casino-body">
+<div class="demo-bar"><a href="../../casino-demo.html" target="_top">← Game lobby</a><span>Virtual credits <strong id="balance">10000</strong></span></div>
+<div class="reel-catch-page">
+    <div class="reel-catch-shell">
+        <div class="reel-catch-titlebar">
+            <div>
+                <div class="reel-catch-kicker">CAST • CATCH • COLLECT</div>
+                <h1>REEL CATCH</h1>
+            </div>
+
+        </div>
+
+        <div class="reel-catch-machine">
+            <div class="undersea-rays" aria-hidden="true"></div>
+
+            <div class="collector-track collector-track-top">
+                <div class="collector-progress">
+                    <div class="collector-fill" id="collectorFill" style="width:0%"></div>
+                    <span class="collector-marker marker-4">4<br><b>x2</b></span>
+                    <span class="collector-marker marker-8">8<br><b>x3</b></span>
+                    <span class="collector-marker marker-12">12<br><b>x10</b></span>
+                </div>
+            </div>
+
+            <div class="reel-area">
+
+                <div class="reel-bubbles bubbles-1" aria-hidden="true"></div>
+                <div class="reel-bubbles bubbles-2" aria-hidden="true"></div>
+                <div class="reel-bubbles bubbles-3" aria-hidden="true"></div>
+                <div class="reel-bubbles bubbles-4" aria-hidden="true"></div>
+
+                <div class="reel-catch-board" id="reels" aria-label="Reel Catch slot reels">
+                    
+        <div class="catch-reel" data-reel="0">
+          <div class="catch-reel-window">
+            <div class="catch-cell" data-row="0" data-reel="0">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="1" data-reel="0">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="2" data-reel="0">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+          </div>
+          <div class="catch-spin-strip" aria-hidden="true"></div>
+        </div>
+        <div class="catch-reel" data-reel="1">
+          <div class="catch-reel-window">
+            <div class="catch-cell" data-row="0" data-reel="1">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="1" data-reel="1">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="2" data-reel="1">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+          </div>
+          <div class="catch-spin-strip" aria-hidden="true"></div>
+        </div>
+        <div class="catch-reel" data-reel="2">
+          <div class="catch-reel-window">
+            <div class="catch-cell" data-row="0" data-reel="2">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="1" data-reel="2">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="2" data-reel="2">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+          </div>
+          <div class="catch-spin-strip" aria-hidden="true"></div>
+        </div>
+        <div class="catch-reel" data-reel="3">
+          <div class="catch-reel-window">
+            <div class="catch-cell" data-row="0" data-reel="3">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="1" data-reel="3">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="2" data-reel="3">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+          </div>
+          <div class="catch-spin-strip" aria-hidden="true"></div>
+        </div>
+        <div class="catch-reel" data-reel="4">
+          <div class="catch-reel-window">
+            <div class="catch-cell" data-row="0" data-reel="4">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="1" data-reel="4">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+            <div class="catch-cell" data-row="2" data-reel="4">
+              <div class="catch-symbol"><span class="symbol-icon"></span><span class="symbol-name"></span></div>
+              <span class="fish-prize"></span>
+            </div>
+          </div>
+          <div class="catch-spin-strip" aria-hidden="true"></div>
+        </div>
+                </div>
+            </div>
+
+            <div class="reel-catch-message-row">
+                <div class="reel-catch-side-status" id="freeSpinsStatus">
+                    <span>FREE SPINS</span>
+                    <strong id="freeSpins">0</strong>
+                </div>
+
+                <div class="reel-catch-message" id="winMessage" role="status">Choose your bet and cast the reels.</div>
+
+                <div class="reel-catch-side-status" id="collectorStatus">
+                    <span>COLLECTOR</span>
+                    <strong id="collectorMultiplier">x1</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="reel-catch-controls">
+            <div class="bet-control">
+                <label for="bet">BET</label>
+                <select id="bet" class="form-select">
+                    <option value="10">10</option>
+<option value="20" selected>20</option>
+<option value="50">50</option>
+<option value="100">100</option>
+<option value="200">200</option>
+<option value="500">500</option>
+<option value="1000">1000</option>
+</select>
+            </div>
+
+            <button id="spinButton" class="catch-spin-button" type="button">
+                <span id="spinButtonText">SPIN</span>
+            </button>
+
+            <button id="autoButton" class="catch-auto-button" type="button" title="Automatically play remaining free spins">
+                AUTO
+            </button>
+        </div>
+
+        <div class="reel-catch-help">
+            <span>10 paylines</span>
+            <span>🐚 3+ shells = 10 free spins</span>
+            <span>🎣 Fishermen appear in FREE SPINS</span>
+            <span>Bonus fishermen collect 💰 fish values</span>
+        </div>
+    </div>
+</div>
+
+<button id="gameAudioButton" class="game-audio-button" type="button" aria-label="Toggle game audio" title="Mute / unmute game audio">🔊</button>
+<script type="module" src="game.js"></script>
+</body>
+</html>
