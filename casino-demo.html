@@ -29,9 +29,9 @@ button{cursor:pointer;font:inherit}.play{border:0;background:linear-gradient(#b4
 .cell.winner{outline:4px solid #f9cb4c}.status{display:flex;justify-content:space-between;gap:12px;font-weight:700;color:#ffdc81}
 .controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
 select,.secondary{background:#182b46;color:white;border:1px solid #71829e;padding:9px;border-radius:9px}
-.unity-dialog{width:min(1280px,calc(100% - 24px),calc((100dvh - 90px) * 1.82857 + 26px));max-width:none;max-height:calc(100% - 24px);padding:12px;border:1px solid #b68f49;border-radius:12px;background:#101925;color:inherit}
+.unity-dialog{width:min(1280px,calc(100% - 24px),calc((100dvh - 90px) * var(--game-ratio) + 26px));max-width:none;max-height:calc(100% - 24px);padding:12px;border:1px solid #b68f49;border-radius:12px;background:#101925;color:inherit}
 .unity-dialog::backdrop{background:#000d}.unity-dialog .head{gap:12px;margin-bottom:8px}.unity-dialog h2{margin:0}
-.unity-frame{display:block;width:100%;aspect-ratio:1280/700;border:0;background:#080c15}
+.unity-frame{display:block;width:100%;aspect-ratio:var(--game-ratio);border:0;background:#080c15}
 #message{text-align:center;min-height:22px;color:#ffde7b}
 @media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.grid{grid-template-columns:1fr}.cell{min-height:60px;font-size:2rem}}
@@ -41,7 +41,7 @@ select,.secondary{background:#182b46;color:white;border:1px solid #71829e;paddin
 <header><a href="casino-demo.html"><strong>♠ CRAIG'S CASINO</strong></a><a class="back" href="index.html#projects">← Portfolio</a></header>
 <main><section class="hero"><div class="suits">♠ ♦ ♣ ♥</div><p class="eyebrow">WELCOME TO</p><img src="Images/craigscasino.png" alt="Craig's Casino"><h1>Demo Game Lobby</h1><p>Play casino-themed mini-games using fictional credits. No account, backend, real-money betting, payments or prizes.</p></section>
 <section><p class="eyebrow">GAME LOBBY</p><h2>Choose a demo</h2><div class="grid" id="games"></div>
-<p class="small">Firebird runs in Unity with virtual credits. The other games are simplified browser demos.</p></section></main>
+<p class="small">Firebird and Candy Cascade run in Unity with virtual credits. The other games are simplified browser demos.</p></section></main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><div class="machine">
 <div class="head"><h2 id="gameTitle">Demo game</h2><button id="close" class="close" aria-label="Close game">✕</button></div>
 <div class="status"><span>Virtual credits: <span id="credits">1000</span></span><span>Last win: <span id="win">0</span></span></div>
@@ -50,13 +50,13 @@ select,.secondary{background:#182b46;color:white;border:1px solid #71829e;paddin
 <p id="message" role="status">Choose your bet and spin.</p><p class="small">Virtual entertainment credits only. No deposits or withdrawals.</p>
 </div></div>
 <dialog class="unity-dialog" id="unityDialog" aria-labelledby="unityTitle">
-<div class="head"><h2 id="unityTitle">Firebird</h2><form method="dialog"><button class="close" autofocus>Close game</button></form></div>
+<div class="head"><h2 id="unityTitle"></h2><form method="dialog"><button class="close" autofocus>Close game</button></form></div>
 </dialog>
 <script>
 'use strict';
 const games=[
 {title:'Firebird',icon:'🔥',description:'Cascading reels and free spins',url:'games/firebird/index.html'},
-{title:'Candy Cascade',icon:'🍬',description:'Sweet colourful reels',symbols:['🍬','🍭','🍒','💎','⭐']},
+{title:'Candy Cascade',icon:'🍬',description:'Cluster wins, tumbling sweets and free spins',url:'games/candy-cascade/index.html',ratio:1240/800},
 {title:'Tempest Temple',icon:'🏰',description:'Storms and crowns',symbols:['⚡','👑','💎','🌩️','🔱']},
 {title:'Reel Catch',icon:'🐠',description:'Fishing-themed slot demo',symbols:['🐠','🐟','🎣','⚓','🪙']},
 {title:'Phoenix Slots',icon:'🦅',description:'Classic fiery reels',symbols:['🦅','🔥','💎','🔔','7️⃣']}
@@ -69,6 +69,8 @@ function show(){el('credits').textContent=credits.toLocaleString('en-GB')}
 function openGame(game){active=game;credits=1000;el('win').textContent='0';el('gameTitle').textContent=game.title;el('message').textContent='Choose your bet and spin.';board(Array.from({length:9},()=>randomSymbol(game.symbols)));show();el('modal').classList.add('open');el('close').focus()}
 const unityDialog=el('unityDialog');
 function openUnityGame(game){
+  el('unityTitle').textContent=game.title;
+  unityDialog.style.setProperty('--game-ratio',game.ratio??1280/700);
   const frame=document.createElement('iframe');
   frame.className='unity-frame';
   frame.title=game.title+' Unity demo';
