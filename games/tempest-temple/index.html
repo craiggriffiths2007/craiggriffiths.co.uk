@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Tempest Temple</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#032638;color:#fff0ba;font-family:Arial,sans-serif}
+    #game{position:relative;width:100%;height:100%}canvas{display:block;width:100%;height:100%;outline:none}
+    #loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(ellipse,#145768,#032638)}
+    #loading h1{font-size:clamp(24px,5vw,40px);letter-spacing:3px;margin:0}progress{width:min(70%,330px);accent-color:#e8cd85}
+    #message{max-width:620px;text-align:center;padding:0 24px;color:#d8f4f5;line-height:1.5}
+    #fullscreen{position:absolute;right:12px;top:10px;border:1px solid #a6d8d7;background:#032638cc;color:#e0f5ef;padding:7px 10px;border-radius:4px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div id="game">
+    <canvas id="unity-canvas" tabindex="0" aria-label="Tempest Temple game"></canvas>
+    <div id="loading" role="status"><progress id="progress" max="1" value="0"></progress><p id="message">Entering the underwater temple…</p></div>
+    <button id="fullscreen" type="button" aria-label="Enter fullscreen">FULLSCREEN</button>
+  </div>
+  <script>
+    let unityInstance;
+    window.TempestKeyboardSpin=()=>{
+      if(!unityInstance)return false;
+      unityInstance.SendMessage('Tempest Temple','KeyboardSpin','');
+      return true;
+    };
+    document.addEventListener('keydown',event=>{
+      if(event.ctrlKey || event.altKey || event.metaKey ||
+         !['Space','Enter','NumpadEnter'].includes(event.code) ||
+         event.target?.closest?.('input,textarea,select,button,a,[contenteditable="true"]'))return;
+      if(event.repeat){if(unityInstance)event.preventDefault();return;}
+      if(window.TempestKeyboardSpin())event.preventDefault();
+    });
+    const loading=document.getElementById('loading');
+    const fail=error=>{loading.style.display='flex';document.getElementById('progress').hidden=true;document.getElementById('message').textContent='Unable to load Tempest Temple. '+String(error);};
+    const script=document.createElement('script');
+    script.src='Build/7ded54259ba2ada1924bf020c054b899.loader.js';
+    script.onerror=()=>fail('Reload the page and try again.');
+    script.onload=()=>createUnityInstance(document.getElementById('unity-canvas'),{
+      dataUrl:'Build/a1179bf815a9b3568042dc32994c9302.data',frameworkUrl:'Build/1030d5a0063f2a60fee9bfda09debb50.framework.js',codeUrl:'Build/4c5e7f03a5e08f1fb2a580ab966baa74.wasm',
+      streamingAssetsUrl:'StreamingAssets',companyName:'Craigs Casino',productName:'Tempest Temple Demo',productVersion:'1.0',
+      showBanner:(message,type)=>{if(type==='error')fail(message);}
+    },progress=>{document.getElementById('progress').value=progress;}).then(instance=>{
+      unityInstance=instance;loading.style.display='none';
+    }).catch(fail);
+    document.body.appendChild(script);
+    document.getElementById('fullscreen').addEventListener('click',()=>{if(unityInstance)unityInstance.SetFullscreen(1);});
+  </script>
+</body>
+</html>
