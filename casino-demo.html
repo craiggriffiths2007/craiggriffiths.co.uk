@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Craig's Casino | Free Game Demos</title>
+<meta name="description" content="Free browser-based casino-themed game demos with virtual credits only. No registration or payments.">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;color:#eff4ff;background:radial-gradient(ellipse at 50% 20%,#251b31,#080c15 70%);font:16px/1.5 system-ui,sans-serif;min-height:100vh}
+header{background:#070a10;border-bottom:1px solid #493a27;padding:15px max(20px,calc((100vw - 1140px)/2));display:flex;justify-content:space-between;gap:15px;align-items:center}
+header strong,.eyebrow{color:#ffda79;letter-spacing:.15em}a{color:inherit;text-decoration:none}
+.back{border:1px solid #6b7185;padding:6px 14px;border-radius:18px;font-size:.85rem}
+main{max-width:1140px;margin:auto;padding:18px 20px 70px}.hero{text-align:center;padding:40px 0 45px}
+.hero img{width:min(510px,95%);display:block;margin:10px auto}.suits{color:#ffd579;letter-spacing:1.2em;font-size:1.5rem}
+h1{margin:10px 0;font-size:clamp(2rem,5vw,3rem)}.hero p{max-width:700px;margin:10px auto;color:#c0cde0}
+.eyebrow{font-size:.75rem;font-weight:800}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{border:1px solid #333747;border-radius:18px;overflow:hidden;background:#101925}
+.art{height:195px;display:grid;place-items:center;font-size:5rem;background:radial-gradient(circle,#9e451c,#251321 70%)}
+.card:nth-child(2) .art{background:radial-gradient(circle,#e755b4,#391969)}
+.card:nth-child(3) .art{background:radial-gradient(circle,#5682e2,#151f4e)}
+.card:nth-child(4) .art{background:radial-gradient(circle,#0da5d3,#092840)}
+.card:nth-child(5) .art{background:radial-gradient(circle,#ec8022,#2c1120)}
+.cardbody{padding:16px;display:flex;justify-content:space-between;align-items:end;gap:9px}h3{margin:0;font-size:1.1rem}.card p{font-size:.8rem;color:#9bb4ca;margin:5px 0}
+button{cursor:pointer;font:inherit}.play{border:0;background:linear-gradient(#b4fa85,#4fb936);padding:9px 15px;border-radius:30px;font-size:.8rem;font-weight:900;color:#12210c}
+.small{font-size:.82rem;color:#aebcd0}.modal{display:none;position:fixed;inset:0;background:#000d;z-index:10;align-items:center;justify-content:center;padding:15px}
+.modal.open{display:flex}.machine{max-width:540px;width:100%;border:2px solid #b68f49;border-radius:18px;padding:20px;background:#101d30;max-height:95vh;overflow-y:auto}
+.head{display:flex;align-items:center;justify-content:space-between}.close{color:white;border:1px solid #75839c;border-radius:8px;background:transparent;padding:5px 10px}
+.reels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0;background:#0b1220;padding:10px;border-radius:10px}
+.cell{min-height:80px;background:linear-gradient(#f0f6fc,#b6cddd);display:grid;place-items:center;border-radius:7px;font-size:2.6rem}
+.cell.winner{outline:4px solid #f9cb4c}.status{display:flex;justify-content:space-between;gap:12px;font-weight:700;color:#ffdc81}
+.controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
+select,.secondary{background:#182b46;color:white;border:1px solid #71829e;padding:9px;border-radius:9px}
+#message{text-align:center;min-height:22px;color:#ffde7b}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.cell{min-height:60px;font-size:2rem}}
+</style>
+</head>
+<body>
+<header><a href="casino-demo.html"><strong>♠ CRAIG'S CASINO</strong></a><a class="back" href="index.html#projects">← Portfolio</a></header>
+<main><section class="hero"><div class="suits">♠ ♦ ♣ ♥</div><p class="eyebrow">WELCOME TO</p><img src="Images/casino.png" alt="Craig's Casino"><h1>Demo Game Lobby</h1><p>Play casino-themed mini-games using fictional credits. No account, backend, real-money betting, payments or prizes.</p></section>
+<section><p class="eyebrow">GAME LOBBY</p><h2>Choose a demo</h2><div class="grid" id="games"></div>
+<p class="small">These are standalone, simplified browser recreations of the original game themes. They do not reproduce the original ASP.NET or Unity engines, bonus features or odds.</p></section></main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><div class="machine">
+<div class="head"><h2 id="gameTitle">Demo game</h2><button id="close" class="close" aria-label="Close game">✕</button></div>
+<div class="status"><span>Virtual credits: <span id="credits">1000</span></span><span>Last win: <span id="win">0</span></span></div>
+<div class="reels" id="reels"></div>
+<div class="controls"><label for="bet">Demo bet</label><select id="bet"><option>10</option><option>25</option><option>50</option><option>100</option></select><button class="play" id="spin">SPIN</button><button class="secondary" id="reset">Reset credits</button></div>
+<p id="message" role="status">Choose your bet and spin.</p><p class="small">Virtual entertainment credits only. No deposits or withdrawals.</p>
+</div></div>
+<script>
+'use strict';
+const games=[
+{title:'Firebird',icon:'🔥',description:'Fiery cascading-style demo',symbols:['🔥','🦅','💎','⭐','👑']},
+{title:'Candy Cascade',icon:'🍬',description:'Sweet colourful reels',symbols:['🍬','🍭','🍒','💎','⭐']},
+{title:'Tempest Temple',icon:'🏰',description:'Storms and crowns',symbols:['⚡','👑','💎','🌩️','🔱']},
+{title:'Reel Catch',icon:'🐠',description:'Fishing-themed slot demo',symbols:['🐠','🐟','🎣','⚓','🪙']},
+{title:'Phoenix Slots',icon:'🦅',description:'Classic fiery reels',symbols:['🦅','🔥','💎','🔔','7️⃣']}
+];
+const el=id=>document.getElementById(id);
+let active=null,credits=1000;
+function randomSymbol(symbols){const bytes=new Uint32Array(1);crypto.getRandomValues(bytes);return symbols[bytes[0]%symbols.length]}
+function board(symbols,won=false){el('reels').replaceChildren(...symbols.map((s,i)=>{const d=document.createElement('div');d.className='cell'+(won&&i>=3&&i<=5?' winner':'');d.textContent=s;return d}))}
+function show(){el('credits').textContent=credits.toLocaleString('en-GB')}
+function openGame(game){active=game;credits=1000;el('win').textContent='0';el('gameTitle').textContent=game.title;el('message').textContent='Choose your bet and spin.';board(Array.from({length:9},()=>randomSymbol(game.symbols)));show();el('modal').classList.add('open');el('close').focus()}
+function closeGame(){el('modal').classList.remove('open');active=null}
+games.forEach(g=>{const card=document.createElement('article');card.className='card';const art=document.createElement('div');art.className='art';art.textContent=g.icon;
+const body=document.createElement('div');body.className='cardbody';const info=document.createElement('div');const title=document.createElement('h3');title.textContent=g.title;const desc=document.createElement('p');desc.textContent=g.description;info.append(title,desc);
+const button=document.createElement('button');button.className='play';button.textContent='DEMO';button.addEventListener('click',()=>openGame(g));body.append(info,button);card.append(art,body);el('games').append(card)});
+el('close').addEventListener('click',closeGame);el('modal').addEventListener('click',e=>{if(e.target===el('modal'))closeGame()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)closeGame()});
+el('reset').addEventListener('click',()=>{credits=1000;show();el('win').textContent='0';el('message').textContent='Virtual credits reset.'});
+el('spin').addEventListener('click',()=>{if(!active)return;const bet=Number(el('bet').value);if(credits<bet){el('message').textContent='Not enough credits. Reset to continue.';return}
+credits-=bet;const symbols=Array.from({length:9},()=>randomSymbol(active.symbols));const won=symbols[3]===symbols[4]&&symbols[4]===symbols[5];const payout=won?bet*10:0;credits+=payout;show();el('win').textContent=payout;board(symbols,won);el('message').textContent=won?'Three matched! You won '+payout+' virtual credits.':'No win this time. Spin again!'});
+</script>
+</body>
+</html>
