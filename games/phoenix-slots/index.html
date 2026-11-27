@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phoenix Slots | Craig's Casino Demo</title>
+<link rel="stylesheet" href="game.css">
+</head>
+<body class="casino-body">
+<div class="demo-bar"><a href="../../casino-demo.html" target="_top">← Game lobby</a><span>Virtual credits <strong id="balance">10000</strong></span></div>
+<div class="container text-center mt-5 phoenix-game-page">
+
+    <h1 class="mb-4">Phoenix Slots</h1>
+
+    
+
+    <div class="reel-window">
+
+        <div class="reel-clip">
+
+            <div id="reels">
+                <div class="slot-cell" data-row="0" data-reel="0"></div>
+                <div class="slot-cell" data-row="0" data-reel="1"></div>
+                <div class="slot-cell" data-row="0" data-reel="2"></div>
+                <div class="slot-cell" data-row="0" data-reel="3"></div>
+                <div class="slot-cell" data-row="0" data-reel="4"></div>
+                <div class="slot-cell" data-row="1" data-reel="0"></div>
+                <div class="slot-cell" data-row="1" data-reel="1"></div>
+                <div class="slot-cell" data-row="1" data-reel="2"></div>
+                <div class="slot-cell" data-row="1" data-reel="3"></div>
+                <div class="slot-cell" data-row="1" data-reel="4"></div>
+                <div class="slot-cell" data-row="2" data-reel="0"></div>
+                <div class="slot-cell" data-row="2" data-reel="1"></div>
+                <div class="slot-cell" data-row="2" data-reel="2"></div>
+                <div class="slot-cell" data-row="2" data-reel="3"></div>
+                <div class="slot-cell" data-row="2" data-reel="4"></div>
+            </div>
+        </div>
+        <svg id="paylineOverlay"></svg>
+
+        <div id="phoenixOverlay"></div>
+
+        <div id="explosionOverlay"></div>
+
+
+    </div>
+
+    <div class="d-flex align-items-end justify-content-center gap-2 mb-3 phoenix-controls">
+
+        <div>
+            <label for="bet" class="d-block">Bet</label>
+
+            <select id="bet"
+                    class="form-select"
+                    style="width:120px;">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+
+        <button id="spinButton"
+                class="btn btn-primary btn-lg px-5">
+            SPIN
+        </button>
+
+    </div>
+
+    <div id="winMessage" role="status"
+         class="mt-3 fs-4">
+    </div>
+</div>
+
+<button id="gameAudioButton" class="game-audio-button" type="button" aria-label="Toggle game audio" title="Mute / unmute game audio">🔊</button>
+<script type="module" src="game.js"></script>
+</body>
+</html>
