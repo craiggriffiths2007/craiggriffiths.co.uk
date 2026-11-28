@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy | Craig Griffiths</title>
+    <meta name="description" content="Privacy and browser storage information for craiggriffiths.co.uk." />
+    <link rel="canonical" href="https://craiggriffiths.co.uk/privacy.html" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+        try {
+            const saved = localStorage.getItem('portfolio-theme');
+            document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+        } catch (_) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="index.html">Craig Griffiths</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section privacy-page">
+        <div class="container narrow">
+            <p class="section-label">PRIVACY</p>
+            <h1>Privacy &amp; Cookies</h1>
+            <p class="muted">Last updated: 28 November 2026</p>
+            <p>This is a personal software-development portfolio. It does not intentionally use advertising cookies or analytics tracking, and you do not need to create an account to browse it.</p>
+
+            <h2>Information collected</h2>
+            <p>The website does not offer a contact form or directly request personal information. As with most websites, its hosting provider may process technical information such as IP addresses, browser details and access logs to deliver the site, maintain security and investigate faults.</p>
+
+            <h2>Cookies &amp; browser storage</h2>
+            <p>The portfolio itself does not intentionally set tracking cookies. It uses your browser's local storage to remember your light or dark theme preference (under the key <code>portfolio-theme</code>). This is kept on your device and is not used for advertising or analytics. You can remove it through your browser settings.</p>
+
+            <h2>External websites</h2>
+            <p>Links to GitHub, LinkedIn, Google Play and project websites take you to independent services with their own privacy practices. These services may use cookies when you visit them.</p>
+
+            <h2>Questions</h2>
+            <p>If you have a privacy question, please get in touch using the <a href="index.html#contact">contact links</a> on the portfolio.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <span>© <span id="year"></span> Craig Griffiths</span>
+            <span><a class="footer-link" href="privacy.html" aria-current="page">Privacy</a></span>
+        </div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
